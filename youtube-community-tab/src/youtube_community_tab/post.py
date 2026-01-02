@@ -304,8 +304,9 @@ class Post(object):
             data["authorText"] = data.pop("displayName")
             data["authorEndpoint"] = data.pop("endpoint")
 
-            original_post_data = post_data["sharedPostRenderer"]["originalPost"]
-            data["originalPost"] = Post.from_data(original_post_data)
+            original_post_data = post_data["sharedPostRenderer"].get("originalPost")
+            if original_post_data is not None:
+                data["originalPost"] = Post.from_data(original_post_data)
 
         elif "backstagePostRenderer" in post_data:
             data = post_data["backstagePostRenderer"]
